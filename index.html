@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Baja Norte — Surf & Spear Expedition</title>
+<meta name="description" content="Interactive trip map: surf, spearfishing, food & stays down the Pacific coast of northern Baja. Late August 2026." />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f2e7d0; --paper-2:#e9dcbf; --ink:#1b2a2b; --ink-soft:#3c4f4d;
+  --ocean:#0e4f5c; --ocean-deep:#0a3942; --coral:#e0613a; --coral-deep:#bd4a2c;
+  --gold:#d99a2b; --agave:#5f8a52; --line:#c9b692; --line-soft:#d9c9a7;
+  --c-surf:#1f7a8c; --c-stay:#5b8c5a; --c-food:#dd8a33; --c-spear:#c75d3a;
+  --c-camp:#7a6a52; --c-tip:#b23a48; --c-bonus:#8a6fb0;
+  --shadow:0 10px 30px rgba(20,30,30,.22);
+  --sans:'DM Sans',system-ui,sans-serif; --disp:'Fraunces',Georgia,serif; --mono:'Space Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--ocean-deep);
+  overflow:hidden; -webkit-text-size-adjust:100%;
+}
+#map{position:absolute; inset:0; background:#0a3942; z-index:1}
+
+/* paper grain overlay on UI panels */
+.grain{position:relative}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:radial-gradient(rgba(120,90,40,.06) 1px,transparent 1px);background-size:4px 4px}
+
+/* ---------- Header ---------- */
+header{
+  position:absolute; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; gap:14px; padding:10px 16px;
+  background:linear-gradient(180deg, rgba(242,231,208,.97), rgba(242,231,208,.86) 70%, rgba(242,231,208,0));
+  pointer-events:none;
+}
+header > *{pointer-events:auto}
+.brand{display:flex; flex-direction:column; line-height:1; margin-right:auto}
+.brand .kicker{font-family:var(--mono); font-size:10px; letter-spacing:.32em; text-transform:uppercase; color:var(--coral-deep)}
+.brand h1{font-family:var(--disp); font-weight:900; font-size:clamp(20px,4.5vw,30px); margin:3px 0 0; letter-spacing:-.01em; color:var(--ink)}
+.brand h1 span{font-style:italic; font-weight:500; color:var(--ocean)}
+.brand .dates{font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; color:var(--ink-soft); margin-top:4px}
+
+.btn{
+  font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  border:1.5px solid var(--ink); background:var(--paper); color:var(--ink);
+  padding:9px 13px; border-radius:30px; cursor:pointer; white-space:nowrap;
+  box-shadow:var(--shadow); transition:transform .12s ease, background .15s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.icon{padding:9px 12px}
+.menu-toggle{display:none}
+
+/* ---------- Layer switch ---------- */
+.layers{position:absolute; right:16px; bottom:24px; z-index:1000; display:flex; flex-direction:column; gap:0;
+  background:var(--paper); border:1.5px solid var(--ink); border-radius:14px; overflow:hidden; box-shadow:var(--shadow)}
+.layers button{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:none; background:transparent;
+  color:var(--ink-soft); padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--line)}
+.layers button:last-child{border-bottom:none}
+.layers button.active{background:var(--ocean); color:var(--paper)}
+
+/* ---------- Legend ---------- */
+.legend{position:absolute; left:16px; bottom:24px; z-index:1000; background:var(--paper); border:1.5px solid var(--ink);
+  border-radius:14px; padding:11px 13px; box-shadow:var(--shadow); max-width:46vw}
+.legend h4{margin:0 0 7px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--coral-deep)}
+.legend .row{display:flex; flex-wrap:wrap; gap:6px 11px}
+.legend .item{display:flex; align-items:center; gap:5px; font-size:11px; color:var(--ink-soft)}
+.legend .dot{width:11px; height:11px; border-radius:50%; border:1.5px solid rgba(0,0,0,.25)}
+
+/* ---------- Spot list (left drawer) ---------- */
+.sidebar{
+  position:absolute; top:0; left:0; z-index:900; width:320px; height:100%;
+  background:var(--paper); border-right:2px solid var(--ink);
+  display:flex; flex-direction:column; box-shadow:var(--shadow);
+  transform:translateX(0); transition:transform .28s cubic-bezier(.4,0,.2,1);
+}
+.sidebar.hidden{transform:translateX(-101%)}
+.sidebar .sb-head{padding:78px 18px 12px; border-bottom:1px solid var(--line)}
+.sidebar .sb-head p{margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.5}
+.sidebar .sb-head .big{font-family:var(--disp); font-style:italic; font-size:15px; color:var(--ocean); display:block; margin-bottom:3px}
+.list{overflow-y:auto; padding:8px 10px 24px; flex:1}
+.reg-label{font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--coral-deep);
+  margin:16px 8px 6px; display:flex; align-items:center; gap:8px}
+.reg-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.spot-item{display:flex; gap:11px; align-items:center; padding:9px 9px; border-radius:11px; cursor:pointer; transition:background .12s}
+.spot-item:hover{background:var(--paper-2)}
+.spot-item.active{background:var(--paper-2); box-shadow:inset 3px 0 0 var(--coral)}
+.spot-num{flex:none; width:27px; height:27px; border-radius:50%; display:grid; place-items:center;
+  font-family:var(--mono); font-weight:700; font-size:12px; color:#fff; border:2px solid rgba(255,255,255,.7); box-shadow:0 2px 5px rgba(0,0,0,.25)}
+.spot-meta{min-width:0}
+.spot-meta .nm{font-weight:700; font-size:13.5px; line-height:1.2; color:var(--ink)}
+.spot-meta .sub{font-size:11px; color:var(--ink-soft); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:215px}
+.spot-tags{margin-left:auto; display:flex; gap:2px; font-size:12px; flex:none}
+
+/* ---------- Detail panel ---------- */
+.panel{
+  position:absolute; top:0; right:0; z-index:1100; width:400px; max-width:92vw; height:100%;
+  background:var(--paper); border-left:2px solid var(--ink); box-shadow:-12px 0 40px rgba(10,25,25,.3);
+  transform:translateX(101%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column;
+}
+.panel.open{transform:translateX(0)}
+.panel .p-scroll{overflow-y:auto; padding:0 0 40px}
+.p-hero{padding:20px 22px 16px; border-bottom:2px solid var(--ink); position:relative; background:var(--paper-2)}
+.p-close{position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; border:1.5px solid var(--ink);
+  background:var(--paper); cursor:pointer; font-size:17px; line-height:1; color:var(--ink)}
+.p-region{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-deep)}
+.p-name{font-family:var(--disp); font-weight:900; font-size:25px; line-height:1.04; margin:6px 50px 10px 0; letter-spacing:-.01em}
+.p-summary{font-size:13.5px; line-height:1.5; color:var(--ink-soft); margin:0}
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px}
+.chip{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:500; padding:4px 10px; border-radius:30px;
+  background:var(--paper); border:1.5px solid; color:#fff}
+
+.sect{padding:18px 22px; border-bottom:1px solid var(--line)}
+.sect h3{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-deep); margin:0 0 12px}
+
+/* verdict meters */
+.verdicts{display:flex; gap:12px; flex-wrap:wrap}
+.verdict{flex:1; min-width:130px; background:var(--paper-2); border:1.5px solid var(--line); border-radius:12px; padding:11px 12px}
+.verdict .vh{display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft)}
+.verdict .vlabel{font-family:var(--disp); font-weight:600; font-style:italic; font-size:17px; margin:5px 0 8px}
+.meter{display:flex; gap:3px}
+.meter span{flex:1; height:7px; border-radius:3px; background:var(--line-soft)}
+
+/* friend quote */
+.friend{background:linear-gradient(180deg,#fff8ea,#f6ecd4); border:1.5px dashed var(--coral); border-radius:13px; padding:14px 16px; position:relative}
+.friend .lbl{font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-deep); display:block; margin-bottom:6px}
+.friend p{margin:0; font-family:var(--disp); font-style:italic; font-size:15px; line-height:1.45; color:var(--ink)}
+
+/* compass */
+.compass-wrap{display:flex; gap:16px; align-items:center; margin-bottom:14px}
+.compass-wrap .meta{font-size:12.5px; line-height:1.7}
+.compass-wrap .meta b{font-family:var(--mono); font-size:11px; letter-spacing:.03em}
+
+/* data grid */
+.dgrid{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+.dcell{background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:9px 11px}
+.dcell .k{font-family:var(--mono); font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--coral-deep)}
+.dcell .v{font-size:13px; font-weight:500; margin-top:3px; line-height:1.35}
+.full{grid-column:1/-1}
+
+.species{display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 10px}
+.species .s{font-size:11px; background:var(--ocean); color:var(--paper); padding:3px 9px; border-radius:20px; font-weight:500}
+
+.take{background:var(--ocean); color:var(--paper); border-radius:13px; padding:14px 16px}
+.take .lbl{font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px}
+.take p{margin:0; font-size:13.5px; line-height:1.55}
+
+.note{font-size:12.5px; line-height:1.55; color:var(--ink-soft); margin:0}
+.tiplist{margin:0; padding:0; list-style:none}
+.tiplist li{font-size:13px; line-height:1.5; padding:7px 0 7px 22px; position:relative; border-bottom:1px solid var(--line)}
+.tiplist li:last-child{border-bottom:none}
+.tiplist li::before{content:"➤"; position:absolute; left:0; color:var(--coral); font-size:11px; top:8px}
+
+.links{display:flex; flex-wrap:wrap; gap:8px}
+.lnk{font-family:var(--mono); font-size:11px; text-decoration:none; color:var(--ocean); border:1.5px solid var(--ocean);
+  padding:7px 12px; border-radius:30px; display:inline-flex; gap:6px; align-items:center; background:var(--paper)}
+.lnk:hover{background:var(--ocean); color:var(--paper)}
+.coords{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.approx-flag{background:var(--gold); color:#3a2a00; font-size:9px; font-weight:700; padding:2px 7px; border-radius:20px; letter-spacing:.06em; text-transform:uppercase}
+
+/* ---------- Modal (Field Notes / intro) ---------- */
+.modal-bg{position:absolute; inset:0; z-index:2000; background:rgba(10,30,30,.55); backdrop-filter:blur(3px);
+  display:none; align-items:center; justify-content:center; padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--paper); border:2px solid var(--ink); border-radius:18px; max-width:520px; width:100%;
+  max-height:86vh; overflow-y:auto; box-shadow:var(--shadow)}
+.modal .m-head{padding:20px 24px 14px; border-bottom:2px solid var(--ink); position:relative}
+.modal .m-head .kicker{font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--coral-deep)}
+.modal .m-head h2{font-family:var(--disp); font-weight:900; font-size:24px; margin:6px 0 0}
+.modal .m-body{padding:6px 24px 22px}
+.intel-group{padding:16px 0; border-bottom:1px solid var(--line)}
+.intel-group:last-child{border-bottom:none}
+.intel-group h3{font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ocean); margin:0 0 9px; display:flex; align-items:center; gap:8px}
+
+/* ---------- Intro banner ---------- */
+.intro{position:absolute; left:50%; top:74px; transform:translateX(-50%); z-index:1500; width:min(560px,92vw);
+  background:var(--paper); border:1.5px solid var(--ink); border-radius:15px; padding:15px 18px; box-shadow:var(--shadow)}
+.intro.gone{display:none}
+.intro p{margin:0; font-size:13px; line-height:1.55; color:var(--ink-soft)}
+.intro p b{color:var(--ink)}
+.intro .x{position:absolute; top:9px; right:11px; border:none; background:none; font-size:18px; cursor:pointer; color:var(--ink-soft)}
+
+/* leaflet marker */
+.pin{position:relative; display:grid; place-items:center}
+.pin .badge{width:30px; height:30px; border-radius:50% 50% 50% 2px; transform:rotate(45deg);
+  border:2px solid var(--paper); box-shadow:0 4px 9px rgba(0,0,0,.4); display:grid; place-items:center}
+.pin .badge b{transform:rotate(-45deg); font-family:var(--mono); font-weight:700; font-size:12px; color:#fff}
+.pin.sel .badge{outline:3px solid var(--coral); outline-offset:2px}
+.leaflet-container{font-family:var(--sans)}
+.leaflet-popup-content-wrapper{border-radius:10px}
+
+::-webkit-scrollbar{width:9px; height:9px}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:10px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- Mobile ---------- */
+@media (max-width:900px){
+  .menu-toggle{display:inline-flex}
+  .sidebar{width:300px; transform:translateX(-101%)}
+  .sidebar.open{transform:translateX(0)}
+  .panel{width:100%; max-width:100%; height:78%; top:auto; bottom:0; border-left:none; border-top:2px solid var(--ink);
+    border-radius:20px 20px 0 0; transform:translateY(101%); box-shadow:0 -12px 40px rgba(10,25,25,.35)}
+  .panel.open{transform:translateY(0)}
+  .panel::before{content:""; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:42px; height:4px; border-radius:3px; background:var(--line)}
+  .p-hero{padding-top:24px}
+  .legend{max-width:none; left:12px; right:74px; bottom:16px}
+  .legend .row{gap:5px 9px}
+  .layers{right:12px; bottom:16px; flex-direction:column}
+  .intro{top:68px}
+}
+@media (max-width:430px){
+  .legend{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<header>
+  <button class="btn icon menu-toggle" id="menuBtn" aria-label="Spot list">☰</button>
+  <div class="brand">
+    <span class="kicker">Pacific Coast Expedition</span>
+    <h1>Baja Norte <span>Surf &amp; Spear</span></h1>
+    <span class="dates">◷ LATE AUGUST 2026 · ~350 MI · TIJUANA → SANTA ROSALIÍTA</span>
+  </div>
+  <button class="btn" id="notesBtn">⚑ Field Notes</button>
+</header>
+
+<!-- Spot list -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <p><span class="big">Tap any spot to dig in.</span>Scored honestly for your <b>late-August</b> dates — when most of these winter points are sleepy but the diving is firing. North → south down the page = north → south down the coast.</p>
+  </div>
+  <div class="list" id="list"></div>
+</aside>
+
+<!-- Detail panel -->
+<section class="panel" id="panel">
+  <div class="p-scroll" id="panelBody"></div>
+</section>
+
+<!-- Layer switch -->
+<div class="layers" id="layers">
+  <button data-layer="sat" class="active">Satellite</button>
+  <button data-layer="topo">Terrain</button>
+  <button data-layer="ocean">Chart</button>
+</div>
+
+<!-- Legend -->
+<div class="legend grain">
+  <h4>Spot Types</h4>
+  <div class="row">
+    <span class="item"><span class="dot" style="background:var(--c-surf)"></span>Surf</span>
+    <span class="item"><span class="dot" style="background:var(--c-spear)"></span>Spear/Dive</span>
+    <span class="item"><span class="dot" style="background:var(--c-stay)"></span>Stay</span>
+    <span class="item"><span class="dot" style="background:var(--c-food)"></span>Eat</span>
+    <span class="item"><span class="dot" style="background:var(--c-bonus)"></span>Bonus</span>
+    <span class="item"><span class="dot" style="background:var(--c-tip)"></span>Tip</span>
+  </div>
+</div>
+
+<!-- Intro banner -->
+<div class="intro grain" id="intro">
+  <button class="x" id="introX" aria-label="dismiss">×</button>
+  <p><b>Hey crew 🤙</b> This is our Baja run. Every pin has the surf forecast window, spearfishing notes, where to crash, and a straight-up <b>verdict for our August dates</b>. Heads up: most of these are NW-swell <i>winter</i> points, so the surf reads "long shot" unless a south swell shows — but the <b>diving will be epic</b>. Tap a pin or open the list. <b>⚑ Field Notes</b> up top has the don't-die driving tips.</p>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal grain" id="modal"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data/spots.js"></script>
+<script>
+/* ---------------- config maps ---------------- */
+const TYPE = {
+  surf:{label:'Surf', icon:'🌊', color:getCss('--c-surf')},
+  stay:{label:'Stay', icon:'🛏️', color:getCss('--c-stay')},
+  food:{label:'Eat',  icon:'🌮', color:getCss('--c-food')},
+  spear:{label:'Spear / Dive', icon:'🐟', color:getCss('--c-spear')},
+  camp:{label:'Camp', icon:'⛺', color:getCss('--c-camp')},
+  tip:{label:'Drive Tip', icon:'⚠️', color:getCss('--c-tip')},
+  bonus:{label:'Bonus Find', icon:'⭐', color:getCss('--c-bonus')},
+};
+const SURF_V = {0:['Flat risk','#9aa3a0'],1:['Long shot','#cf6b4b'],2:['Swell-dependent','#d99a2b'],3:['Good odds','#5b8c5a'],4:['Prime','#2f7d4f']};
+const SPEAR_V = {1:['Slow','#cf6b4b'],2:['Decent','#d99a2b'],3:['Good','#5b8c5a'],4:['Prime','#2f7d4f']};
+function getCss(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+/* ---------------- map ---------------- */
+const map = L.map('map',{zoomControl:false, attributionControl:true}).setView([30.8,-115.9],7);
+L.control.zoom({position:'bottomright'}).addTo(map);
+const A='https://server.arcgisonline.com/ArcGIS/rest/services/';
+const layers = {
+  sat: L.layerGroup([
+    L.tileLayer(A+'World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Esri'}),
+    L.tileLayer(A+'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,opacity:.9})
+  ]),
+  topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'OpenTopoMap (CC-BY-SA)'}),
+  ocean: L.layerGroup([
+    L.tileLayer(A+'Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:13,attribution:'Esri Ocean'}),
+    L.tileLayer(A+'Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',{maxZoom:13})
+  ])
+};
+let current = layers.sat.addTo(map);
+document.querySelectorAll('.layers button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.layers button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); map.removeLayer(current); current=layers[b.dataset.layer].addTo(map);
+  };
+});
+
+/* ---------------- route line ---------------- */
+const ordered = [...TRIP.spots].sort((a,b)=>a.order-b.order);
+const latlngs = ordered.map(s=>[s.lat,s.lng]);
+L.polyline(latlngs,{color:getCss('--coral'),weight:2.5,opacity:.85,dashArray:'2 9',lineCap:'round'}).addTo(map);
+L.polyline(latlngs,{color:'#fff',weight:7,opacity:.12}).addTo(map);
+
+/* ---------------- markers ---------------- */
+const markers={};
+ordered.forEach(s=>{
+  const col = TYPE[s.primary].color;
+  const icon = L.divIcon({className:'',html:
+    `<div class="pin" data-id="${s.id}"><div class="badge" style="background:${col}"><b>${s.order}</b></div></div>`,
+    iconSize:[30,30], iconAnchor:[15,28], popupAnchor:[0,-26]});
+  const m = L.marker([s.lat,s.lng],{icon}).addTo(map);
+  m.on('click',()=>openSpot(s.id));
+  m.bindTooltip(s.name,{direction:'top',offset:[0,-26],opacity:.95});
+  markers[s.id]=m;
+});
+map.fitBounds(L.latLngBounds(latlngs).pad(0.12));
+
+/* ---------------- spot list ---------------- */
+const listEl=document.getElementById('list');
+let lastRegion=null;
+ordered.forEach(s=>{
+  if(s.region!==lastRegion){
+    const r=document.createElement('div'); r.className='reg-label'; r.textContent=s.region; listEl.appendChild(r); lastRegion=s.region;
+  }
+  const el=document.createElement('div'); el.className='spot-item'; el.dataset.id=s.id;
+  const tags=s.types.filter(t=>TYPE[t]).slice(0,4).map(t=>`<span title="${TYPE[t].label}">${TYPE[t].icon}</span>`).join('');
+  el.innerHTML=`<div class="spot-num" style="background:${TYPE[s.primary].color}">${s.order}</div>
+    <div class="spot-meta"><div class="nm">${s.name}</div><div class="sub">${s.summary||''}</div></div>
+    <div class="spot-tags">${tags}</div>`;
+  el.onclick=()=>openSpot(s.id);
+  listEl.appendChild(el);
+});
+
+/* ---------------- swell compass ---------------- */
+function compass(range){
+  const sz=128,c=sz/2,r=46;
+  const ptc=(b,rad)=>[c+rad*Math.sin(b*Math.PI/180), c-rad*Math.cos(b*Math.PI/180)];
+  const [a,b]=range; let delta=((b-a)%360+360)%360; const large=delta>180?1:0;
+  const [x1,y1]=ptc(a,r),[x2,y2]=ptc(b,r);
+  const mid=a+delta/2; const [ax,ay]=ptc(mid,r-4); const [ix,iy]=ptc(mid,16);
+  const card=[['N',0],['E',90],['S',180],['W',270]].map(([t,d])=>{const[x,y]=ptc(d,r+11);return `<text x="${x}" y="${y+4}" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#3c4f4d">${t}</text>`;}).join('');
+  return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="#fff8ea" stroke="#c9b692" stroke-width="1.5"/>
+    ${[0,45,90,135,180,225,270,315].map(d=>{const[x,y]=ptc(d,r);const[xi,yi]=ptc(d,r-6);return `<line x1="${xi}" y1="${yi}" x2="${x}" y2="${y}" stroke="#c9b692" stroke-width="1"/>`;}).join('')}
+    <path d="M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}" fill="none" stroke="${getCss('--coral')}" stroke-width="7" stroke-linecap="round"/>
+    <line x1="${ax}" y1="${ay}" x2="${ix}" y2="${iy}" stroke="${getCss('--ocean')}" stroke-width="2.5"/>
+    <polygon points="0,-6 5,4 -5,4" fill="${getCss('--ocean')}" transform="translate(${ix},${iy}) rotate(${mid+180})"/>
+    <circle cx="${c}" cy="${c}" r="3.5" fill="${getCss('--ocean')}"/>
+    ${card}
+  </svg>`;
+}
+
+/* ---------------- detail panel ---------------- */
+const panel=document.getElementById('panel'), panelBody=document.getElementById('panelBody');
+let activeId=null;
+
+function verdictBlock(title,icon,score,map_){
+  const [label,color]=map_[score]||['—','#9aa3a0'];
+  const segs=[1,2,3,4].map(i=>`<span style="background:${i<=score?color:''}"></span>`).join('');
+  return `<div class="verdict"><div class="vh">${icon} ${title} · Aug</div>
+    <div class="vlabel" style="color:${color}">${label}</div><div class="meter">${segs}</div></div>`;
+}
+
+function openSpot(id){
+  const s=TRIP.spots.find(x=>x.id===id); if(!s) return;
+  activeId=id;
+  document.querySelectorAll('.spot-item').forEach(e=>e.classList.toggle('active',e.dataset.id===id));
+  document.querySelectorAll('.pin').forEach(p=>p.classList.toggle('sel',p.dataset.id===id));
+  if(window.innerWidth<=900) document.getElementById('sidebar').classList.remove('open');
+
+  let h=`<div class="p-hero"><button class="p-close" onclick="closePanel()">×</button>
+    <div class="p-region">${s.region}</div>
+    <div class="p-name">${s.name}</div>
+    <p class="p-summary">${s.summary||''}</p>
+    <div class="chips">${s.types.filter(t=>TYPE[t]).map(t=>`<span class="chip" style="border-color:${TYPE[t].color};background:${TYPE[t].color}">${TYPE[t].icon} ${TYPE[t].label}</span>`).join('')}</div>
+  </div>`;
+
+  // verdicts
+  if(s.surf||s.spear){
+    h+=`<div class="sect"><h3>Verdict for your dates</h3><div class="verdicts">`;
+    if(s.surf) h+=verdictBlock('Surf','🌊',s.surf.aug,SURF_V);
+    if(s.spear) h+=verdictBlock('Dive','🐟',s.spear.aug,SPEAR_V);
+    h+=`</div></div>`;
+  }
+
+  // friend
+  if(s.friend) h+=`<div class="sect"><div class="friend"><span class="lbl">⚑ Straight from your friend</span><p>“${s.friend}”</p></div></div>`;
+
+  // surf
+  if(s.surf){
+    h+=`<div class="sect"><h3>🌊 Surf</h3>
+      <div class="compass-wrap">${compass(s.surf.swellDeg)}
+        <div class="meta"><b>Best swell</b><br>${s.surf.swell}<br><span style="color:var(--ink-soft);font-size:11px">(coral arc = where the swell comes from)</span></div>
+      </div>
+      <div class="dgrid">
+        <div class="dcell"><div class="k">Period</div><div class="v">${s.surf.period}</div></div>
+        <div class="dcell"><div class="k">Tide</div><div class="v">${s.surf.tide}</div></div>
+        <div class="dcell"><div class="k">Prime Season</div><div class="v">${s.surf.season}</div></div>
+        <div class="dcell"><div class="k">Skill</div><div class="v">${s.surf.skill}</div></div>
+        <div class="dcell full"><div class="k">Hazards / Notes</div><div class="v">${s.surf.hazards}</div></div>
+      </div></div>`;
+  }
+
+  // spear
+  if(s.spear){
+    h+=`<div class="sect"><h3>🐟 Spearfishing / Diving</h3>
+      <div class="species">${(s.spear.species||[]).map(x=>`<span class="s">${x}</span>`).join('')}</div>
+      <div class="dgrid"><div class="dcell"><div class="k">Visibility (Aug)</div><div class="v">${s.spear.viz}</div></div>
+      <div class="dcell"><div class="k">Window</div><div class="v">Warm-water peak</div></div></div>
+      <p class="note" style="margin-top:10px">${s.spear.notes}</p></div>`;
+  }
+
+  // stay
+  if(s.stay){
+    h+=`<div class="sect"><h3>🛏️ Where to Stay${s.stay.nights?` · <span style="color:var(--ocean)">${s.stay.nights} night${s.stay.nights==='1'?'':'s'}</span>`:''}</h3>
+      <p class="note">${s.stay.options}</p>${s.stay.tip?`<p class="note" style="margin-top:8px"><b>Tip:</b> ${s.stay.tip}</p>`:''}</div>`;
+  }
+
+  // take
+  if(s.take) h+=`<div class="sect"><div class="take"><span class="lbl">★ My read for late August</span><p>${s.take}</p></div></div>`;
+
+  // links + coords
+  h+=`<div class="sect" style="border-bottom:none">`;
+  if(s.links&&s.links.length){
+    h+=`<h3>Plan it</h3><div class="links">${s.links.map(l=>`<a class="lnk" href="${l.url}" target="_blank" rel="noopener">↗ ${l.label}</a>`).join('')}
+      <a class="lnk" href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener">📍 Open in Maps</a></div>`;
+  } else {
+    h+=`<div class="links"><a class="lnk" href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener">📍 Open in Maps</a></div>`;
+  }
+  h+=`<div class="coords">⌖ ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)} ${s.coord==='approx'?'<span class="approx-flag">approx · confirm on ground</span>':''}</div></div>`;
+
+  panelBody.innerHTML=h; panelBody.scrollTop=0;
+  panel.classList.add('open');
+  if(history.replaceState) history.replaceState(null,'','#'+id);
+  map.flyTo([s.lat,s.lng], Math.max(map.getZoom(),11), {duration:.7});
+}
+function closePanel(){panel.classList.remove('open'); activeId=null;
+  document.querySelectorAll('.spot-item').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.pin').forEach(p=>p.classList.remove('sel'));}
+
+/* ---------------- field notes modal ---------------- */
+const modalBg=document.getElementById('modalBg'), modal=document.getElementById('modal');
+function openNotes(){
+  const I=TRIP.intel;
+  const grp=(icon,title,items)=>`<div class="intel-group"><h3>${icon} ${title}</h3><ul class="tiplist">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  modal.innerHTML=`<div class="m-head"><button class="p-close" onclick="closeModal()">×</button>
+    <div class="kicker">Your friend's intel · trip-wide</div><h2>Field Notes</h2></div>
+    <div class="m-body">
+      ${grp('🚗',"Driving — don't die",I.driving)}
+      ${grp('🎒','Gear to bring',I.gear)}
+      ${grp('🤝','Local etiquette',I.etiquette)}
+      ${grp('🌀','Season &amp; weather',I.season)}
+    </div>`;
+  modalBg.classList.add('show');
+}
+function closeModal(){modalBg.classList.remove('show');}
+document.getElementById('notesBtn').onclick=openNotes;
+modalBg.onclick=e=>{if(e.target===modalBg) closeModal();};
+
+/* ---------------- ui wiring ---------------- */
+document.getElementById('menuBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('open');
+document.getElementById('introX').onclick=()=>document.getElementById('intro').classList.add('gone');
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();closeModal();}});
+
+/* deep-link: open a spot directly via #spot-id (shareable per-spot links) */
+function applyHash(){const id=location.hash.replace('#','');if(id&&TRIP.spots.find(s=>s.id===id))openSpot(id);}
+window.addEventListener('hashchange',applyHash);
+applyHash();
+</script>
+</body>
+</html>
