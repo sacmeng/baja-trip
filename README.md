@@ -4,7 +4,7 @@ An interactive trip-planning map for a surf + spearfishing road trip down the
 Pacific coast of northern Baja California — **late August 2026**, Tijuana →
 Santa Rosaliíta (~350 mi).
 
-**Live map:** https://isaacmenge.github.io/baja-trip/
+**Live map:** https://sacmeng.github.io/baja-trip/
 
 Every spot is scored honestly for the late-August window (south-swell season),
 with a swell-window compass, spearfishing notes, lodging, hazards, forecast
@@ -13,7 +13,7 @@ driving/gear/etiquette intel lives in the **Field Notes** panel.
 
 ### Deep links
 Link straight to one spot by adding its id, e.g.
-`https://isaacmenge.github.io/baja-trip/#punta-baja`
+`https://sacmeng.github.io/baja-trip/#punta-baja`
 
 ### Edit the spots
 All data lives in [`data/spots.js`](data/spots.js) — coordinates, ratings, and
