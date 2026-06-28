@@ -304,5 +304,77 @@ window.TRIP = {
       take: "Your southern endpoint. Jetty surf is less swell-picky so it can offer a fun final wave, and there's a town for basics. Good place to call it and start the drive back north.",
       links: [{ label: "Surf-Forecast (The Wall)", url: "https://www.surf-forecast.com/breaks/Punta-Santa-Rosalillita" }]
     }
+  ],
+
+  /* ---- Suggested routes for a 7–9 day trip (incl. Santa Cruz drive each way) ---- */
+  routes: [
+    {
+      id: "classic", name: "The 8-Day Classic", days: 8, recommended: true,
+      tag: "Balanced surf + fish — pushes all the way to Punta Baja and back.",
+      focus: ["surf", "spear"], color: "#1f7a8c",
+      stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas", "el-rosario", "punta-baja"],
+      locs: ["sd", "erendira", "erendira", "cuatro-casas", "punta-baja", "punta-baja", "sd", "santa-cruz"],
+      plan: [
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; sort Mexican insurance + FMM"],
+        ["2", "Cross at Tecate → Ensenada → Eréndira", "~3 hr · basecamp Coyote Cal's; afternoon spear"],
+        ["3", "Eréndira / Punta Cabras", "Big fishing day; ask Cal re: the ridge spot; surf K-181 if there's swell"],
+        ["4", "→ San Quintín / Cuatro Casas", "~2 hr · surf Cuatro Casas; spear volcanic reefs; beach camp"],
+        ["5", "→ El Rosario → Punta Baja", "~1.5 hr · SW-swell surf + fish the point; try Ed's place"],
+        ["6", "Punta Baja — full day", "Dawn surf + spear; this is the turnaround"],
+        ["7", "Punta Baja → San Diego", "~6 hr + border · last surf San Miguel/La Salina; sleep US side"],
+        ["8", "San Diego → Santa Cruz", "~8.5 hr · home"]
+      ]
+    },
+    {
+      id: "quick", name: "7-Day Quick Strike", days: 7,
+      tag: "Least driving — turn around at Cuatro Casas. Fish-leaning with a surf day.",
+      focus: ["spear", "surf"], color: "#5b8c5a",
+      stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas"],
+      locs: ["sd", "erendira", "erendira", "erendira", "cuatro-casas", "sd", "santa-cruz"],
+      plan: [
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; insurance + FMM"],
+        ["2", "Cross → Ensenada → Eréndira", "~3 hr · basecamp Coyote Cal's; afternoon spear"],
+        ["3", "Eréndira / Punta Cabras", "Full fishing day + mellow cove surf"],
+        ["4", "Eréndira (2nd day)", "Ridge spot with Cal; surf K-181 if it's breaking"],
+        ["5", "→ Cuatro Casas / San Quintín", "~2 hr · surf + spear the volcanic reefs; camp"],
+        ["6", "Cuatro Casas → San Diego", "~5.5 hr · last surf San Miguel/La Salina on the way; sleep US"],
+        ["7", "San Diego → Santa Cruz", "~8.5 hr · home"]
+      ]
+    },
+    {
+      id: "stretch", name: "9-Day Stretch", days: 9,
+      tag: "Most time at the highlight — two nights at Punta Baja. Best surf + fish combo.",
+      focus: ["surf", "spear"], color: "#8a6fb0",
+      stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas", "el-rosario", "punta-baja"],
+      locs: ["sd", "erendira", "erendira", "cuatro-casas", "punta-baja", "punta-baja", "punta-baja", "sd", "santa-cruz"],
+      plan: [
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; insurance + FMM"],
+        ["2", "Cross → Ensenada → Eréndira", "~3 hr · basecamp; afternoon spear"],
+        ["3", "Eréndira / Punta Cabras", "Big fishing day; ridge spot with Cal"],
+        ["4", "→ San Quintín / Cuatro Casas", "~2 hr · surf + spear; beach camp"],
+        ["5", "→ El Rosario → Punta Baja", "~1.5 hr · settle in at the point; try Ed's"],
+        ["6", "Punta Baja", "Surf + spear the point"],
+        ["7", "Punta Baja (2nd day)", "More surf/fish, or day-trip the El Rosario sights"],
+        ["8", "Punta Baja → San Diego", "~6 hr + border · sleep US side"],
+        ["9", "San Diego → Santa Cruz", "~8.5 hr · home"]
+      ]
+    },
+    {
+      id: "fish", name: "Fish-Heavy (8-Day)", days: 8,
+      tag: "Spearfishing priority — three nights basecamped at Eréndira.",
+      focus: ["spear", "surf"], color: "#c75d3a",
+      stops: ["santa-cruz", "la-salina", "ensenada", "erendira", "punta-cabras", "cuatro-casas"],
+      locs: ["sd", "erendira", "erendira", "erendira", "cuatro-casas", "ensenada", "sd", "santa-cruz"],
+      plan: [
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; insurance + FMM"],
+        ["2", "Cross → La Salina (halibut) → Eréndira", "~3.5 hr · basecamp Coyote Cal's"],
+        ["3", "Eréndira / Punta Cabras", "Full spear day — reef, lobster, rockfish"],
+        ["4", "Eréndira — ridge spot with Cal", "4WD to the insider spot; pelagic hunt"],
+        ["5", "→ San Quintín / Cuatro Casas", "~2 hr · spear volcanic reefs; surf PM; camp"],
+        ["6", "San Quintín → La Salina → Ensenada", "Halibut session heading north; sleep near Ensenada"],
+        ["7", "Ensenada → San Diego", "~2 hr + border, then drive; sleep US side"],
+        ["8", "San Diego → Santa Cruz", "~8.5 hr · home"]
+      ]
+    }
   ]
 };
