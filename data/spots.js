@@ -40,10 +40,25 @@ window.TRIP = {
       "Late August = peak south/SW swell season + warmest water + best dive visibility of the year.",
       "It's also the heart of hurricane/chubasco season (Jun–Nov). A tropical storm off mainland Mexico can send pulse swell AND wash out sections of Hwy 1.",
       "Check road conditions daily via the Facebook groups 'Talk Baja' / 'Talk Baja Road Conditions' once you're rolling."
+    ],
+    border: [
+      "Buy Mexican auto insurance before you cross — your US policy does NOT cover you in Mexico.",
+      "Get an FMM tourist permit at the border (required past Ensenada / for stays over 7 days). Keep it on you.",
+      "Cross at Tecate instead of Tijuana to skip the worst border traffic.",
+      "Cross in the morning — never roll into Baja for the first time at night."
     ]
   },
 
   spots: [
+    {
+      id: "santa-cruz", order: -1, name: "Santa Cruz, CA — Start", region: "California · Start",
+      lat: 36.9741, lng: -122.0308, coord: "exact",
+      types: ["start"], primary: "start",
+      friend: "",
+      summary: "Trip origin. ~545 mi / 8–9 hr down to the border before Baja even begins.",
+      take: "Leave early — it's a full ~8–9 hr driving day to San Diego, so plan to cross the next morning and never enter Baja at night. Before crossing: buy Mexican auto insurance (your US policy won't cover you), grab an FMM tourist permit, top off fuel, and pull cash. Crossing at Tecate dodges the worst Tijuana border lines. See the Field Notes → Border panel for the full checklist.",
+      links: []
+    },
     {
       id: "tj-rosarito", order: 0, name: "Tijuana → Rosarito", region: "The Border Run",
       lat: 32.405, lng: -117.045, coord: "exact",
