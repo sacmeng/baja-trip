@@ -367,7 +367,8 @@ document.querySelectorAll('.layers button').forEach(b=>{b.onclick=()=>{
 /* ---------------- order + route ---------------- */
 const ordered=[...TRIP.spots].sort((a,b)=>a.order-b.order);
 ordered.forEach((s,i)=>s.num=i+1);
-const latlngs=ordered.map(s=>[s.lat,s.lng]);
+const mainPts=ordered.filter(s=>!s.sideTrip);
+const latlngs=mainPts.map(s=>[s.lat,s.lng]);
 L.polyline(latlngs,{color:'#fff',weight:7,opacity:.12}).addTo(map);
 L.polyline(latlngs,{color:getCss('--coral'),weight:2.5,opacity:.85,dashArray:'2 9',lineCap:'round'}).addTo(map);
 
@@ -493,11 +494,12 @@ function openNotes(){
   modal.innerHTML=`<div class="m-head"><button class="p-close" onclick="closeModal()">${ic('close',18)}</button>
     <div class="kicker">Trip-wide intel</div><h2>Field Notes</h2></div>
     <div class="m-body">
-      ${grp('car','Driving — don’t die',I.driving)}
-      ${grp('mappin','Border crossing',I.border)}
-      ${grp('pack','Gear to bring',I.gear)}
-      ${grp('users','Local etiquette',I.etiquette)}
-      ${grp('storm','Season &amp; weather',I.season)}
+      ${grp(‘car’,’Driving — don\’t die’,I.driving)}
+      ${grp(‘mappin’,’Border crossing’,I.border)}
+      ${grp(‘pack’,’Gear to bring’,I.gear)}
+      ${grp(‘users’,’Local etiquette’,I.etiquette)}
+      ${grp(‘storm’,’Season &amp; weather’,I.season)}
+      ${grp(‘surf’,’Swell &amp; hurricane windows’,I.swell)}
     </div>`;
   modalBg.classList.add('show');
 }

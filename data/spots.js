@@ -41,6 +41,13 @@ window.TRIP = {
       "It's also the heart of hurricane/chubasco season (Jun–Nov). A tropical storm off mainland Mexico can send pulse swell AND wash out sections of Hwy 1.",
       "Check road conditions daily via the Facebook groups 'Talk Baja' / 'Talk Baja Road Conditions' once you're rolling."
     ],
+    swell: [
+      "Late August is dead for NW groundswell — the northern hemisphere storm track is at its annual minimum. Most of the right points on this route will be flat. Do not plan the trip around Salsipuedes or San Miguel firing.",
+      "Hurricane/tropical swell IS the August surf story. An Eastern Pacific tropical system tracking between 17–23°N off Jalisco or Colima can send a long-period SW/S pulse (14–18s) up the Baja coast. Travel time from storm origin to Scorpion Bay: roughly 24–36 hrs. A hurricane 400–600 mi to the SE is your ideal setup.",
+      "Scorpion Bay (San Juanico) is a hurricane-swell specialist. S/SW swell from 175–220° at 14s+ turns it into a 3/4-mile perfect left that peels for hundreds of yards. A single swell event can run 3–5 days and improve as the wind cleans up. Start watching the Eastern Pacific 5–7 days before you arrive.",
+      "El Niño conditions raise Eastern Pacific sea-surface temps 1–3°C and tend to increase the frequency of Eastern Pacific tropical cyclones — meaning more hurricane-swell opportunities for Baja. El Niño years also push the storm track slightly north, which can help swell reach Baja with less decay. Check current ENSO status at climate.gov/enso before you go.",
+      "Resources: surfline.com (Scorpion Bay forecast + Baja alerts), nhc.noaa.gov (NOAA NHC active storms — Eastern Pacific tab), windguru.cz, surf-forecast.com/breaks/San-Juanico-Scorpion-Bay. Set a watch for any Eastern Pacific tropical system tracking between 15–25°N — that is your swell window."
+    ],
     border: [
       "Buy Mexican auto insurance before you cross — your US policy does NOT cover you in Mexico.",
       "Get an FMM tourist permit at the border (required past Ensenada / for stays over 7 days). Keep it on you.",
@@ -293,6 +300,44 @@ window.TRIP = {
       links: [{ label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Seven_Sisters,_Baja_California" }]
     },
 
+    // ---- Sea of Cortez / Scorpion Bay spots (Cortez route only — sideTrip:true keeps them off the main coast polyline) ----
+    {
+      id: "san-felipe", order: 21, name: "San Felipe", region: "Sea of Cortez",
+      lat: 31.024, lng: -114.842, coord: "exact",
+      sideTrip: true,
+      types: ["stay", "food", "spear"], primary: "stay",
+      summary: "First stop on the Cortez side — warm flat water, fishing pier, cold beer, first night in Baja on the east crossing.",
+      spear: { aug: 3, species: ["corvina", "white seabass", "pargo", "triggerfish"], viz: "15–25 ft", notes: "Warm, calm Cortez water — great shake-out dive after the Mexicali drive. Rocky reefs south of town hold corvina and white seabass; sand flats between the jetties are good for halibut on a flat-calm morning." },
+      stay: { options: "Plenty of hotels, palapa camps, and RV parks on the malecon. El Dorado Ranch popular for American travelers; budget casas in town.", nights: "1", tip: "Fuel up fully — last reliable services before Bay of LA. Fish the pier at dawn before the drive south." },
+      take: "A transition stop, not a headline. Get your Cortez legs, sort gear, eat good tacos, fill the tank. The real show is Bay of LA — push south in the morning.",
+      links: []
+    },
+
+    {
+      id: "bahia-angeles", order: 22, name: "Bahía de los Ángeles", region: "Sea of Cortez",
+      lat: 28.954, lng: -113.556, coord: "approx",
+      sideTrip: true,
+      types: ["spear", "stay", "camp"], primary: "spear",
+      summary: "One of Baja's premier dive destinations — crystal Cortez water, whale sharks, big yellows, and manta rays.",
+      spear: { aug: 4, species: ["yellowtail", "dorado", "pargo", "cabrilla", "leopard grouper"], viz: "30–60 ft", notes: "Crystal-clear water at 27–30°C in August. Rocky islands (Las Ánimas, Cabeza de Caballo) hold big yellowtail and pargo; the channel runs dorado. Whale sharks aggregate here May–Oct — no spearing near them. Rent a panga from a local fisherman to reach the island reefs 2–5 km offshore." },
+      stay: { options: "Beachfront camping at Guillermo's (palapa shade, cold drinks, boat access) or Las Hamacas. Basic casas de huéspedes in the village. Bring all food — the town has minimal supplies.", nights: "2", tip: "Book a panga the evening you arrive. The best reefs are offshore and unreachable without a boat. Two nights minimum — one dive day is not enough here." },
+      take: "The crown jewel of the Cortez detour. Wildlife you won't see on the Pacific side: whale sharks, manta rays, roosterfish, massive dorado. Plan two full days minimum. The drive from Hwy 1 is paved but takes about 1.5 hrs — worth every mile.",
+      links: [{ label: "Surf-Forecast (no surf)", url: "https://www.surf-forecast.com" }]
+    },
+
+    {
+      id: "scorpion-bay", order: 23, name: "Scorpion Bay — San Juanico", region: "Pacific · Central Baja",
+      lat: 26.215, lng: -112.423, coord: "approx",
+      sideTrip: true,
+      types: ["surf", "stay", "camp"], primary: "surf",
+      friend: "",
+      summary: "The most famous wave in all of Baja — a 3/4-mile left-hand point that turns world-class on hurricane swell.",
+      surf: { aug: 3, swell: "S–SW hurricane swell", swellDeg: [175, 220], period: "14s+", tide: "mid", season: "Aug–Oct on hurricane swell; long flat spells between events", skill: "All levels (long, forgiving sections at the top; more powerful at the inside)", hazards: "~4 hr of rough dirt road from Hwy 1. Town has fuel (sometimes — bring extra). Zero cell service. On a big swell, the inside section gets hollow and strong current runs." },
+      stay: { options: "Scorpion Bay camping (Campos #1–3, run by local families; basic amenities). Scorpion Bay Hotel is the most established. Bring all water, food, and a spare fuel jerry can.", nights: "2–3", tip: "If there is swell in the water, do not leave early. A Scorpion Bay pulse can run 3–5 days and often improves as the wind cleans up on day 2." },
+      take: "This is the whole reason to extend the trip south. In flat conditions it's a beautiful remote fishing camp. On a SW/S hurricane swell it becomes one of the longest, most perfect left-hand points on earth. Your read: check the Eastern Pacific for tropical activity 5–7 days before you arrive. If there's swell in the forecast, hold your position and do not drive out early.",
+      links: [{ label: "Surf-Forecast", url: "https://www.surf-forecast.com/breaks/San-Juanico-Scorpion-Bay" }]
+    },
+
     {
       id: "santa-rosaliita", order: 20, name: "Santa Rosaliíta (jetty)", region: "Seven Sisters",
       lat: 28.661, lng: -114.237, coord: "exact",
@@ -359,6 +404,26 @@ window.TRIP = {
         ["9", "San Diego → Santa Cruz", "~8.5 hr · home"]
       ]
     },
+    {
+      id: "cortez", name: "Cortez & Scorpion — 10-Day", days: 10,
+      tag: "Mexicali crossing → Sea of Cortez dive camp → Scorpion Bay on hurricane swell.",
+      focus: ["spear", "surf"], color: "#1a7a6e",
+      stops: ["santa-cruz", "san-felipe", "bahia-angeles", "scorpion-bay", "ensenada"],
+      locs: [[32.79,-115.56], "san-felipe", "bahia-angeles", "bahia-angeles", "scorpion-bay", "scorpion-bay", "scorpion-bay", [27.97,-114.06], "sd", "santa-cruz"],
+      plan: [
+        ["1", "Santa Cruz → El Centro, CA (US side)", "~7 hr · sleep near Calexico; Mexicali-Calexico border crossing first thing tomorrow"],
+        ["2", "Cross Mexicali → San Felipe", "~2.5 hr into Baja on Hwy 5 · first night on the Sea of Cortez — warm flat water; fish the pier at dawn"],
+        ["3", "San Felipe → Bahía de los Ángeles", "~4 hr south → paved cutover · set up camp; book a panga and shake-out dive in the afternoon"],
+        ["4", "Bahía de los Ángeles — full day", "Whale sharks, yellowtail, dorado, manta rays · rent a panga to reach the island reefs — best diving of the trip"],
+        ["5", "Bay of LA → Hwy 1 → Scorpion Bay", "~7–8 hr driving day · back to Hwy 1, south through Guerrero Negro, cut west to San Juanico — aim to arrive by 4 pm"],
+        ["6", "Scorpion Bay — surf day 1", "Check the south swell — if a hurricane pulse is running, this is the best wave on the trip: 3/4-mile peeling left"],
+        ["7", "Scorpion Bay — surf day 2 / flex", "Dawn patrol round 2; if the swell drops, begin the drive north — do not leave on a good swell day"],
+        ["8", "Scorpion Bay → Guerrero Negro area", "~4–5 hr north on Hwy 1 · sleep in the Guerrero Negro zone (28th parallel)"],
+        ["9", "Guerrero Negro → San Diego (border)", "~8–9 hr + border · last wave at San Miguel or La Salina if swell's up; sleep US side"],
+        ["10", "San Diego → Santa Cruz", "~8.5 hr · home"]
+      ]
+    },
+
     {
       id: "fish", name: "Fish-Heavy (8-Day)", days: 8,
       tag: "Spearfishing priority — three nights basecamped at Eréndira.",
