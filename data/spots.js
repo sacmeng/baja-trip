@@ -306,23 +306,23 @@ window.TRIP = {
       lat: 31.024, lng: -114.842, coord: "exact",
       sideTrip: true,
       types: ["stay", "food", "spear"], primary: "stay",
-      summary: "First stop on the Cortez side — warm flat water, fishing pier, cold beer, first night in Baja on the east crossing.",
-      spear: { aug: 3, species: ["corvina", "white seabass", "pargo", "triggerfish"], viz: "15–25 ft", notes: "Warm, calm Cortez water — great shake-out dive after the Mexicali drive. Rocky reefs south of town hold corvina and white seabass; sand flats between the jetties are good for halibut on a flat-calm morning." },
-      stay: { options: "Plenty of hotels, palapa camps, and RV parks on the malecon. El Dorado Ranch popular for American travelers; budget casas in town.", nights: "1", tip: "Fuel up fully — last reliable services before Bay of LA. Fish the pier at dawn before the drive south." },
-      take: "A transition stop, not a headline. Get your Cortez legs, sort gear, eat good tacos, fill the tank. The real show is Bay of LA — push south in the morning.",
+      summary: "First Cortez stop — warm flat water, pier fishing, cold beer, real town. Sleep here after the Mexicali crossing to break up the drive to Gonzaga.",
+      spear: { aug: 3, species: ["corvina", "white seabass", "pargo", "triggerfish"], viz: "15–25 ft", notes: "Warm, calm Cortez water — worth a wet shake-out from shore. Rocky reefs south of town hold corvina and white seabass; sand flats near the jetties fish well for halibut on a flat-calm morning." },
+      stay: { options: "Plenty of hotels, palapa camps, and RV parks on the malecon. Budget casas in town; El Dorado Ranch if you want something more comfortable.", nights: "1", tip: "Fuel up fully here — last reliable services before Gonzaga Bay. Morning pier casting before the drive south is easy and worth doing." },
+      take: "The easy Cortez intro — a real town with food, fuel, and warm flat water. Sleep here after crossing Mexicali (~4.5 hrs from San Diego) and push to Gonzaga the next morning (3.5 hrs south on Hwy 5). Don't overthink it.",
       links: []
     },
 
     {
-      id: "bahia-angeles", order: 22, name: "Bahía de los Ángeles", region: "Sea of Cortez",
-      lat: 28.954, lng: -113.556, coord: "approx",
+      id: "gonzaga-bay", order: 22, name: "Bahía Gonzaga (Alfonsinas)", region: "Sea of Cortez",
+      lat: 29.817, lng: -114.383, coord: "approx",
       sideTrip: true,
-      types: ["spear", "stay", "camp"], primary: "spear",
-      summary: "One of Baja's premier dive destinations — crystal Cortez water, whale sharks, big yellows, and manta rays.",
-      spear: { aug: 4, species: ["yellowtail", "dorado", "pargo", "cabrilla", "leopard grouper"], viz: "30–60 ft", notes: "Crystal-clear water at 27–30°C in August. Rocky islands (Las Ánimas, Cabeza de Caballo) hold big yellowtail and pargo; the channel runs dorado. Whale sharks aggregate here May–Oct — no spearing near them. Rent a panga from a local fisherman to reach the island reefs 2–5 km offshore." },
-      stay: { options: "Beachfront camping at Guillermo's (palapa shade, cold drinks, boat access) or Las Hamacas. Basic casas de huéspedes in the village. Bring all food — the town has minimal supplies.", nights: "2", tip: "Book a panga the evening you arrive. The best reefs are offshore and unreachable without a boat. Two nights minimum — one dive day is not enough here." },
-      take: "The crown jewel of the Cortez detour. Wildlife you won't see on the Pacific side: whale sharks, manta rays, roosterfish, massive dorado. Plan two full days minimum. The drive from Hwy 1 is paved but takes about 1.5 hrs — worth every mile.",
-      links: [{ label: "Surf-Forecast (no surf)", url: "https://www.surf-forecast.com" }]
+      types: ["stay", "spear", "camp"], primary: "stay",
+      summary: "A remote, protected Cortez bay with real shore fishing, Alfonsinas for cold beer and fresh seafood, and one of the best sunsets in Baja.",
+      spear: { aug: 3, species: ["yellowtail", "cabrilla", "corvina", "sea bass", "grouper"], viz: "20–35 ft", notes: "Rocky points at the north end of the bay hold cabrilla and corvina on jigs from shore; grouper in deeper structure. Lighter plankton than Bay of LA — workable visibility for shallow reef hunting without a panga. Shore casting from the point with surface irons and stick baits works." },
+      stay: { options: "Alfonsinas Hotel & Restaurant: beachfront palapa camping + basic rooms, cold beer, fresh seafood right on the water. The only real operation in the bay. Bring all water, fuel, and groceries — nothing else exists out here.", nights: "1–2", tip: "Fish the north rocky point at first light, swim the warm flat bay mid-day, eat at Alfonsinas at sunset. Petty theft reported at remote boondock sites nearby — keep gear secured and out of sight." },
+      take: "The right Cortez stop for a shore-based crew. Better natural setting than San Felipe, no boat required, and the shore fishing is legit. Alfonsinas is a Baja institution — the kind of place you won't want to leave. 3.5 hrs south of San Felipe on Hwy 5 (some rough sections); ~6 hrs to Scorpion Bay continuing south to Hwy 1.",
+      links: []
     },
 
     {
@@ -405,22 +405,21 @@ window.TRIP = {
       ]
     },
     {
-      id: "cortez", name: "Cortez & Scorpion — 10-Day", days: 10,
-      tag: "Mexicali crossing → Sea of Cortez dive camp → Scorpion Bay on hurricane swell.",
+      id: "cortez", name: "Cortez & Scorpion — 9-Day", days: 9,
+      tag: "Mexicali crossing → Sea of Cortez shore camp → Scorpion Bay on hurricane swell.",
       focus: ["spear", "surf"], color: "#1a7a6e",
-      stops: ["santa-cruz", "san-felipe", "bahia-angeles", "scorpion-bay", "ensenada"],
-      locs: [[32.79,-115.56], "san-felipe", "bahia-angeles", "bahia-angeles", "scorpion-bay", "scorpion-bay", "scorpion-bay", [27.97,-114.06], "sd", "santa-cruz"],
+      stops: ["santa-cruz", "san-felipe", "gonzaga-bay", "scorpion-bay", "ensenada"],
+      locs: ["sd", "san-felipe", "gonzaga-bay", "scorpion-bay", "scorpion-bay", "scorpion-bay", [27.97,-114.06], "sd", "santa-cruz"],
       plan: [
-        ["1", "Santa Cruz → El Centro, CA (US side)", "~7 hr · sleep near Calexico; Mexicali-Calexico border crossing first thing tomorrow"],
-        ["2", "Cross Mexicali → San Felipe", "~2.5 hr into Baja on Hwy 5 · first night on the Sea of Cortez — warm flat water; fish the pier at dawn"],
-        ["3", "San Felipe → Bahía de los Ángeles", "~4 hr south → paved cutover · set up camp; book a panga and shake-out dive in the afternoon"],
-        ["4", "Bahía de los Ángeles — full day", "Whale sharks, yellowtail, dorado, manta rays · rent a panga to reach the island reefs — best diving of the trip"],
-        ["5", "Bay of LA → Hwy 1 → Scorpion Bay", "~7–8 hr driving day · back to Hwy 1, south through Guerrero Negro, cut west to San Juanico — aim to arrive by 4 pm"],
-        ["6", "Scorpion Bay — surf day 1", "Check the south swell — if a hurricane pulse is running, this is the best wave on the trip: 3/4-mile peeling left"],
-        ["7", "Scorpion Bay — surf day 2 / flex", "Dawn patrol round 2; if the swell drops, begin the drive north — do not leave on a good swell day"],
-        ["8", "Scorpion Bay → Guerrero Negro area", "~4–5 hr north on Hwy 1 · sleep in the Guerrero Negro zone (28th parallel)"],
-        ["9", "Guerrero Negro → San Diego (border)", "~8–9 hr + border · last wave at San Miguel or La Salina if swell's up; sleep US side"],
-        ["10", "San Diego → Santa Cruz", "~8.5 hr · home"]
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; sort Mexican insurance and FMM tourist card tonight"],
+        ["2", "San Diego → Mexicali crossing → San Felipe", "~4.5 hr + border · first night on the Cortez — pier fishing at sunset, cold Pacificos, warm flat water; fuel up before tomorrow"],
+        ["3", "San Felipe → Bahía Gonzaga (Alfonsinas)", "~3.5 hr south on Hwy 5 · arrive early afternoon; fish the north rocky point, swim the bay, eat at Alfonsinas at sunset — classic Baja"],
+        ["4", "Bahía Gonzaga → Scorpion Bay", "~6 hr · south on Hwy 5 to Hwy 1, south through Guerrero Negro, cut west to San Juanico on the dirt — aim to arrive by 4 pm"],
+        ["5", "Scorpion Bay — surf day 1", "Check the south swell — on a hurricane pulse this is the best wave of the trip: 3/4-mile peeling left from points 1–4"],
+        ["6", "Scorpion Bay — surf day 2 / flex", "Dawn patrol again; if the swell drops, begin the drive north — do not leave on a good swell day"],
+        ["7", "Scorpion Bay → Guerrero Negro area", "~4–5 hr north on Hwy 1 · sleep at the 28th parallel"],
+        ["8", "Guerrero Negro → San Diego (border)", "~8–9 hr + border · check San Miguel or La Salina if swell's up on the way through; sleep US side"],
+        ["9", "San Diego → Santa Cruz", "~8.5 hr · home"]
       ]
     },
 
