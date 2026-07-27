@@ -37,16 +37,16 @@ window.TRIP = {
       "Rolling up to a local's break? Say hi. Offering a six-pack goes a long way."
     ],
     season: [
-      "Late August = peak south/SW swell season + warmest water + best dive visibility of the year.",
+      "Late August = peak south/SW swell season + warmest Pacific water of the year (62–67°F in northern Baja). Pacific viz runs 15–30 ft due to seasonal upwelling — plan for kelp forest conditions, not crystal Cortez water. Fish counts are best of the year: yellowtail season peaks Aug–Nov, and SpearFactor calls August 'the best month for high-volume diving.'",
       "It's also the heart of hurricane/chubasco season (Jun–Nov). A tropical storm off mainland Mexico can send pulse swell AND wash out sections of Hwy 1.",
       "Check road conditions daily via the Facebook groups 'Talk Baja' / 'Talk Baja Road Conditions' once you're rolling."
     ],
     swell: [
-      "Late August is dead for NW groundswell — the northern hemisphere storm track is at its annual minimum. Most of the right points on this route will be flat. Do not plan the trip around Salsipuedes or San Miguel firing.",
+      "Late August is dead for NW groundswell — the northern hemisphere storm track is at its annual minimum. Most of the right points on this route will be flat. Do not plan the trip around Salsipuedes or San Miguel firing. San Miguel is additionally blocked from south swell by Punta Banda and Todos Santos Island.",
       "Hurricane/tropical swell IS the August surf story. An Eastern Pacific tropical system tracking between 17–23°N off Jalisco or Colima can send a long-period SW/S pulse (14–18s) up the Baja coast. Travel time from storm origin to Scorpion Bay: roughly 24–36 hrs. A hurricane 400–600 mi to the SE is your ideal setup.",
-      "Scorpion Bay (San Juanico) is a hurricane-swell specialist. S/SW swell from 175–220° at 14s+ turns it into a 3/4-mile perfect left that peels for hundreds of yards. A single swell event can run 3–5 days and improve as the wind cleans up. Start watching the Eastern Pacific 5–7 days before you arrive.",
+      "Scorpion Bay (San Juanico) is the hurricane-swell specialist: S/SW swell from 175–220° at 14s+ turns it into a 3/4-mile perfect left. But for a 7-day trip from Santa Cruz, Scorpion Bay is too far — the drive eats the trip. The accessible south swell wave is Cuatro Casas (right-hand reef, 4.5 hrs from SD), which specifically fires on SSW swell June–October. Watch surf-forecast.com/breaks/Quatro-Casas — if a pulse is running, camp there.",
       "El Niño conditions raise Eastern Pacific sea-surface temps 1–3°C and tend to increase the frequency of Eastern Pacific tropical cyclones — meaning more hurricane-swell opportunities for Baja. El Niño years also push the storm track slightly north, which can help swell reach Baja with less decay. Check current ENSO status at climate.gov/enso before you go.",
-      "Resources: surfline.com (Scorpion Bay forecast + Baja alerts), nhc.noaa.gov (NOAA NHC active storms — Eastern Pacific tab), windguru.cz, surf-forecast.com/breaks/San-Juanico-Scorpion-Bay. Set a watch for any Eastern Pacific tropical system tracking between 15–25°N — that is your swell window."
+      "Resources: surfline.com (Scorpion Bay + Cuatro Casas forecasts + Baja alerts), nhc.noaa.gov (NOAA NHC active storms — Eastern Pacific tab), windguru.cz. Set a watch for any Eastern Pacific tropical system tracking between 15–25°N — that is your swell window."
     ],
     border: [
       "Buy Mexican auto insurance before you cross — your US policy does NOT cover you in Mexico.",
@@ -178,7 +178,7 @@ window.TRIP = {
       friend: "Hostel and can stay in lighthouse. Coyote Cal's. Talk to Cal and take mining road over ridge to Gonzaga for epic diving and fishing. Ask Cal at Coyotes if Mama's is still there — great restaurant.",
       summary: "The hub. A legendary fishing-village hostel — base for surf, spear, and off-road.",
       surf: { aug: 2, swell: "W–NW", swellDeg: [260, 305], period: "10–15s", tide: "varies", season: "Year-round in the coves", skill: "All levels", hazards: "Cold water (4/3 wetsuit). Very remote." },
-      spear: { aug: 4, species: ["yellowtail", "white seabass", "lobster", "rockfish"], viz: "15–30 ft", notes: "ASK CAL about the mining road over the ridge — your friend's insider tip for 'epic diving and fishing.' Bring 4WD. This is local knowledge you won't find online; confirm the exact spot with Cal." },
+      spear: { aug: 4, species: ["yellowtail", "white seabass", "lobster", "rockfish"], viz: "15–30 ft", notes: "ASK CAL about the mining road over the ridge — your friend's insider tip for 'epic diving and fishing.' Bring 4WD. This is local knowledge you won't find online; confirm the exact spot with Cal. For offshore sessions: Castro's Fishing Place (near Coyote Cal's) runs panga charters — book the evening you arrive. August kicks off yellowtail peak season (Aug–Nov), and SpearFactor calls August 'the best month for high-volume diving' — fish are bigger and more spread out than June/July. Viz runs 15–20 ft on bad days, 30 ft when conditions cooperate; kelp forest conditions, not crystal Cortez water." },
       stay: { options: "Coyote Cal's hostel (since '97): bunks, private rooms, tent/RV sites, even a lighthouse stay. Free waffles at 7:30am, wetsuit & soft-top rentals.", nights: "2–3", tip: "Ask Cal if 'Mama's' restaurant is still around. Make this your basecamp for the area." },
       take: "Set up here for 2–3 nights and run day missions. The single highest-value lead in your friend's notes — Cal is the key that unlocks the local spots.",
       links: [{ label: "Coyote Cal's", url: "https://www.coyotecals.com/" }]
@@ -201,9 +201,9 @@ window.TRIP = {
       types: ["surf", "stay", "camp"], primary: "surf",
       friend: "Say hi to a neighbor, offer a 6 pack or something. Good waves and can camp on beach.",
       summary: "Wind-sheltered right reef/point with a cliff-top hostel — surf since the '60s.",
-      surf: { aug: 3, swell: "W–NW (well sheltered from wind)", swellDeg: [260, 305], period: "10–16s", tide: "mid", season: "Works much of the year", skill: "Intermediate–Advanced", hazards: "Reef bottom, remote; 8 km of dirt road off Hwy 1 (follow signs, not GPS)" },
+      surf: { aug: 4, swell: "SSW–SW (south swell specialist)", swellDeg: [195, 255], period: "10–16s", tide: "mid", season: "June–Oct on south/SW swell; dead flat in winter", skill: "Intermediate–Advanced", hazards: "Reef bottom, remote; 8 km of dirt road off Hwy 1 (follow signs, not GPS)" },
       stay: { options: "Cuatro Casas Hostel on the cliff + beach camping.", nights: "1–2", tip: "Say hi to the neighbors, offer a six-pack — local goodwill matters here." },
-      take: "One of your better surf odds for August: it's a sheltered right that handles a range of conditions, not a pure winter point. Camp on the beach and settle in.",
+      take: "The best accessible south swell wave in northern Baja — a right-hand reef/semi-point described as 'a summertime favorite that catches lots of south swell,' with July–August as peak months. Ideal: SSW swell at 195–240° + NE offshore wind. Sheltered from wind by kelp and bluffs. If a hurricane pulse is running and you can't make Scorpion Bay, this is where you park the car. Watch surf-forecast.com/breaks/Quatro-Casas — when the SSW window opens, do not miss it.",
       links: [{ label: "Cuatro Casas Hostel", url: "https://hostelcuatrocasas.com/" }, { label: "Surf-Forecast", url: "https://es.surf-forecast.com/breaks/Quatro-Casas" }]
     },
 
@@ -372,17 +372,17 @@ window.TRIP = {
     },
     {
       id: "quick", name: "7-Day Quick Strike", days: 7,
-      tag: "Least driving — turn around at Cuatro Casas. Fish-leaning with a surf day.",
+      tag: "Right-sized for Aug 22–28 — 3 spear days at Eréndira, then Cuatro Casas if south swell fires.",
       focus: ["spear", "surf"], color: "#5b8c5a",
       stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas"],
       locs: ["sd", "erendira", "erendira", "erendira", "cuatro-casas", "sd", "santa-cruz"],
       plan: [
-        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; insurance + FMM"],
-        ["2", "Cross → Ensenada → Eréndira", "~3 hr · basecamp Coyote Cal's; afternoon spear"],
-        ["3", "Eréndira / Punta Cabras", "Full fishing day + mellow cove surf"],
-        ["4", "Eréndira (2nd day)", "Ridge spot with Cal; surf K-181 if it's breaking"],
-        ["5", "→ Cuatro Casas / San Quintín", "~2 hr · surf + spear the volcanic reefs; camp"],
-        ["6", "Cuatro Casas → San Diego", "~5.5 hr · last surf San Miguel/La Salina on the way; sleep US"],
+        ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; sort Mexican insurance + FMM tonight"],
+        ["2", "Cross → Ensenada → Eréndira (Coyote Cal's)", "~3 hr from border · basecamp Coyote Cal's; book a panga with Castro's Fishing for tomorrow morning"],
+        ["3", "Eréndira — full spear day", "Offshore panga session at dawn (yellowtail, WSB); shore dive Punta Cabras coves in the afternoon — August is peak season for both"],
+        ["4", "Eréndira (2nd day) — Cal's ridge spot", "The insider move: ask Cal about the mining road over the ridge — 'epic diving and fishing' per the trip notes. 4WD required. Surf K-181 if sandbar is built up."],
+        ["5", "→ Cuatro Casas", "~2 hr south · CHECK surf-forecast.com/breaks/Quatro-Casas before you leave — if SSW swell is running this right-reef fires in August and is the best wave on this route; if flat, spear the volcanic reefs near San Quintín instead"],
+        ["6", "Cuatro Casas → San Diego", "~5.5 hr + border · last wave at K-58 (Alisitos) if SSW swell still running on the way north; sleep US side"],
         ["7", "San Diego → Santa Cruz", "~8.5 hr · home"]
       ]
     },
