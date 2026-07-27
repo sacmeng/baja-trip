@@ -372,17 +372,17 @@ window.TRIP = {
     },
     {
       id: "quick", name: "7-Day Quick Strike", days: 7,
-      tag: "Right-sized for Aug 22–28 — 3 spear days at Eréndira, then Cuatro Casas if south swell fires.",
+      tag: "Aug 22–28 corridor run — Coyote Cal's → Cuatro Casas surf check → Punta Baja.",
       focus: ["spear", "surf"], color: "#5b8c5a",
-      stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas"],
-      locs: ["sd", "erendira", "erendira", "erendira", "cuatro-casas", "sd", "santa-cruz"],
+      stops: ["santa-cruz", "ensenada", "erendira", "punta-cabras", "cuatro-casas", "el-rosario", "punta-baja"],
+      locs: ["sd", "erendira", "erendira", "punta-baja", "punta-baja", "sd", "santa-cruz"],
       plan: [
         ["1", "Santa Cruz → San Diego", "~8.5 hr · sleep US side; sort Mexican insurance + FMM tonight"],
-        ["2", "Cross → Ensenada → Eréndira (Coyote Cal's)", "~3 hr from border · basecamp Coyote Cal's; book a panga with Castro's Fishing for tomorrow morning"],
-        ["3", "Eréndira — full spear day", "Offshore panga session at dawn (yellowtail, WSB); shore dive Punta Cabras coves in the afternoon — August is peak season for both"],
-        ["4", "Eréndira (2nd day) — Cal's ridge spot", "The insider move: ask Cal about the mining road over the ridge — 'epic diving and fishing' per the trip notes. 4WD required. Surf K-181 if sandbar is built up."],
-        ["5", "→ Cuatro Casas", "~2 hr south · CHECK surf-forecast.com/breaks/Quatro-Casas before you leave — if SSW swell is running this right-reef fires in August and is the best wave on this route; if flat, spear the volcanic reefs near San Quintín instead"],
-        ["6", "Cuatro Casas → San Diego", "~5.5 hr + border · last wave at K-58 (Alisitos) if SSW swell still running on the way north; sleep US side"],
+        ["2", "Cross at Tecate → Ensenada → Eréndira (Coyote Cal's)", "~3 hr from border · basecamp Coyote Cal's; book panga with Castro's Fishing for tomorrow; ask Cal about the ridge spot"],
+        ["3", "Eréndira — dive + fish day", "Dawn panga for yellowtail/WSB; shore dive Punta Cabras reefs in the afternoon. If Cal greenlights the ridge spot, swap afternoon for the 4WD insider mission instead — it's the single highest-value tip in these notes."],
+        ["4", "Eréndira → Cuatro Casas check → El Rosario → Punta Baja", "~5 hr total · check surf-forecast.com/breaks/Quatro-Casas before leaving — if SSW swell is running, surf Cuatro Casas before pushing south (you won't regret the stop). Fuel + Mama Espinoza's lobster burrito at El Rosario. Find Ed's place at Punta Baja before dark."],
+        ["5", "Punta Baja — full day", "Best SW-wrap surf wave on the route — ask Ed about the reef entry. Dawn patrol surf, then spear the rocky point structure; this is the turnaround."],
+        ["6", "Punta Baja → San Diego", "~6 hr + border · surf K-58 (Alisitos) or La Salina heading north if swell still running; sleep US side"],
         ["7", "San Diego → Santa Cruz", "~8.5 hr · home"]
       ]
     },
